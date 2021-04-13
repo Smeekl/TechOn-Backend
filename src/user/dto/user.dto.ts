@@ -1,5 +1,3 @@
-import { Column } from 'typeorm';
-
 export class CreateUserDto {
   email: string;
   password: string;

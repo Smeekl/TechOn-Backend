@@ -17,41 +17,46 @@ export class AuthService {
     const { email, password } = user;
     const userExist = await this.userService.findByEmail(email);
 
-    if (!userExist) {
-      const payload = { username: email };
-      const token = this.jwtService.sign(payload);
-
-      let usernameRegex = /^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
-      if (
-        email.match(usernameRegex) !== null &&
-        password.match(usernameRegex) !== null
-      ) {
-        await this.userService.create(user);
-        const validUser = await this.validateUser({
-          email,
-          password: createHash('sha256').update(password).digest('hex'),
-        });
-
-        await this.userService.update(validUser.id, { token: token });
-        return token;
-      } else if (email.length < 3) {
-        throw new UnauthorizedException(
-          'email must contain more than 3 characters',
-        );
-      } else if (password.length <= 0) {
-        throw new UnauthorizedException(
-          'Password must contain more than 1 characters',
-        );
-      } else if (email.match(usernameRegex) === null) {
-        throw new UnauthorizedException(
-          'Your username is not valid. Only characters A-Z, a-z, 0-9 and should doesnt contains special characters.',
-        );
-      } else if (password.match(usernameRegex) === null) {
-        throw new UnauthorizedException(
-          'Your password is not valid. Only characters A-Z, a-z, 0-9 and should doesnt contains special characters.',
-        );
-      }
+    if (userExist) {
+      throw new UnauthorizedException('This user already exist!');
     }
+
+    const payload = { username: email };
+    const token = this.jwtService.sign(payload);
+
+    let usernameRegex = /^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+    if (email.length < 3) {
+      throw new UnauthorizedException(
+        'email must contain more than 3 characters',
+      );
+    }
+
+    if (password.length <= 0) {
+      throw new UnauthorizedException(
+        'Password must contain more than 1 characters',
+      );
+    }
+
+    if (email.match(usernameRegex) === null) {
+      throw new UnauthorizedException(
+        'Your username is not valid. Only characters A-Z, a-z, 0-9 and should doesnt contains special characters.',
+      );
+    }
+
+    if (password.match(usernameRegex) === null) {
+      throw new UnauthorizedException(
+        'Your password is not valid. Only characters A-Z, a-z, 0-9 and should doesnt contains special characters.',
+      );
+    }
+
+    await this.userService.create(user);
+    const validUser = await this.validateUser({
+      email,
+      password: createHash('sha256').update(password).digest('hex'),
+    });
+
+    await this.userService.update(validUser.id, { token: token });
+    return token;
   }
 
   async login(user: LoginDto) {
