@@ -12,6 +12,8 @@ import { AuthModule } from '../auth/auth.module';
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import {Spec} from "../spec/entities/spec.entity";
 import {Product} from "../product/entities/product.entity";
+import {ProductModule} from "../product/product.module";
+import {SpecModule} from "../spec/spec.module";
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import {Product} from "../product/entities/product.entity";
     }),
     UserModule,
     AuthModule,
+    ProductModule
   ],
   controllers: [AppController],
   providers: [AppService],
