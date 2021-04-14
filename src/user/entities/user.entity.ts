@@ -48,6 +48,6 @@ export class User {
   updated_time: Date;
 
   @OneToMany(()=>Order, orders => orders.userId)
-  @JoinColumn({name: 'id', referencedColumnName: 'user'})
+  @JoinColumn({name: 'id', referencedColumnName: 'userId'})
   orders: Order[];
 }

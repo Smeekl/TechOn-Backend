@@ -12,9 +12,6 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(()=>User, user => user.orders)
-  @JoinColumn({name: 'user', referencedColumnName: 'id'})
-  userId: User;
 
   @Column()
   orderDate: string;
@@ -34,4 +31,8 @@ export class Order {
 
   @UpdateDateColumn()
   updated_time: Date;
+
+  @ManyToOne(()=>User, user => user.orders)
+  @JoinColumn({name: 'userId', referencedColumnName: 'id'})
+  userId: User;
 }
