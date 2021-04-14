@@ -3,10 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
+  UpdateDateColumn, OneToMany, JoinColumn,
 } from 'typeorm';
 import { createHash } from 'crypto';
 import { LoginDto } from '../../auth/dto/auth.dto';
+import {Order} from "../../order/entities/order.entity";
 
 @Entity()
 export class User {
@@ -45,4 +46,8 @@ export class User {
 
   @UpdateDateColumn()
   updated_time: Date;
+
+  @OneToMany(()=>Order, orders => orders.userId)
+  @JoinColumn({name: 'id', referencedColumnName: 'user'})
+  orders: Order[];
 }

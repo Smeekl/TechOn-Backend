@@ -9,6 +9,9 @@ import { Order } from '../order/entities/order.entity';
 import { Auth } from '../auth/entities/auth.entity';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
+import { SnakeNamingStrategy } from "typeorm-naming-strategies";
+import {Spec} from "../spec/entities/spec.entity";
+import {Product} from "../product/entities/product.entity";
 
 @Module({
   imports: [
@@ -20,9 +23,10 @@ import { AuthModule } from '../auth/auth.module';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User, Auth, Order],
+      entities: [User, Auth, Order, Product, Spec],
       synchronize: true,
       logging: true,
+      namingStrategy: new SnakeNamingStrategy(),
     }),
     UserModule,
     AuthModule,

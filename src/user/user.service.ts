@@ -18,7 +18,6 @@ export class UserService {
 
   create(createUserDto: CreateUserDto) {
     const user = new User(createUserDto);
-    console.log(user);
     return this.userRepository
       .createQueryBuilder()
       .insert()
