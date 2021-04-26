@@ -14,6 +14,7 @@ import {Spec} from "../spec/entities/spec.entity";
 import {Product} from "../product/entities/product.entity";
 import {ProductModule} from "../product/product.module";
 import {SpecModule} from "../spec/spec.module";
+import {ProductImages} from "../product/entities/productImages.entity";
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import {SpecModule} from "../spec/spec.module";
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User, Auth, Order, Product, Spec],
+      entities: [User, Auth, Order, Product, Spec, ProductImages],
       synchronize: true,
       logging: true,
       namingStrategy: new SnakeNamingStrategy(),
