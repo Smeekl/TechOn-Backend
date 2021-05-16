@@ -67,4 +67,8 @@ export class ProductService {
   async update(criteria: number | ProductDto, user: ProductDto) {
     await this.productRepository.update(criteria, user);
   }
+
+  async delete(id: number) {
+    await this.productRepository.delete(id);
+  }
 }
