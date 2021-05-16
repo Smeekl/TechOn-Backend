@@ -20,10 +20,7 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  create(
-    @Body() createProductDto: CreateProductDto,
-    @Res() response: Response,
-  ) {
+  create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
 

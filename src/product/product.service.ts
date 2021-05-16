@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { createQueryBuilder, Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CreateProductDto, ProductDto } from './dto/product.dto';
 import { ProductImages } from './entities/productImages.entity';
@@ -69,11 +69,11 @@ export class ProductService {
   }
 
   async delete(id: number) {
-    await this.productRepository
-      .createQueryBuilder('product_images')
+    await createQueryBuilder('product_images')
       .where('product_images.productId = :id', { id })
-      .delete();
+      .delete()
+      .execute();
 
-    await this.productRepository.delete(id);
+    return await this.productRepository.delete(id);
   }
 }
