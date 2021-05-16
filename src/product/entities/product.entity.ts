@@ -28,28 +28,28 @@ export class Product {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ default: '' })
   short_title: string;
 
-  @Column()
+  @Column({ default: '' })
   description: string;
 
-  @Column()
+  @Column({ default: 0 })
   price: number;
 
-  @Column()
+  @Column({ default: 0 })
   viewed: number;
 
-  @Column()
+  @Column({ default: 0 })
   reviews: number;
 
-  @Column()
+  @Column({ default: 0 })
   purchasesNumber: number;
 
-  @Column()
+  @Column({ default: 0 })
   quantityOnStock: number;
 
-  @Column()
+  @Column({ default: '' })
   image: string;
 
   @OneToMany(() => ProductImages, (image) => image.productId)

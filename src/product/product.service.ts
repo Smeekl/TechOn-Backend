@@ -69,6 +69,11 @@ export class ProductService {
   }
 
   async delete(id: number) {
+    await this.productRepository
+      .createQueryBuilder('product_images')
+      .where('product_images.productId = :id', { id })
+      .delete();
+
     await this.productRepository.delete(id);
   }
 }

@@ -6,16 +6,24 @@ import {
   Patch,
   Param,
   Delete,
+  Catch,
+  UseFilters,
+  Res,
+  Response,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto, ProductDto } from './dto/product.dto';
+import { HttpExceptionFilter } from '../exceptions/http.exception.filter';
 
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
+  create(
+    @Body() createProductDto: CreateProductDto,
+    @Res() response: Response,
+  ) {
     return this.productService.create(createProductDto);
   }
 

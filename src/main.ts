@@ -1,5 +1,6 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+import { AllExceptionsFilter } from './exceptions/all-exceptions.filter';
 
 declare const module: any;
 
@@ -12,6 +13,9 @@ async function bootstrap() {
       credentials: true,
     },
   });
+
+  const { httpAdapter } = app.get(HttpAdapterHost);
+
   const port: number = parseInt(`${process.env.PORT}`) || 3002;
   await app.listen(port);
 
